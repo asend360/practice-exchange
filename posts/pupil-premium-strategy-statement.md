@@ -1,7 +1,7 @@
 ---
 title: Your Pupil Premium strategy statement: what to publish and when
 slug: pupil-premium-strategy-statement
-date: 2026-10-22
+date: 2026-11-03
 category: Leadership
 summary: What the DfE requires schools to publish about Pupil Premium spending, how to build a statement that stands up to scrutiny, and how to show impact without drowning in spreadsheets.
 sources: Pupil premium: overview (DfE)|https://www.gov.uk/government/publications/pupil-premium ;; Using your pupil premium funding effectively (Education Endowment Foundation)|https://educationendowmentfoundation.org.uk/guidance-for-teachers/using-pupil-premium
@@ -43,7 +43,7 @@ Monitoring through the year makes this much easier. Rating each activity termly 
 
 ## Pupils with SEND
 
-Many pupils eligible for Pupil Premium also have SEND. The funding is not intended to replace SEN provision, but well-chosen activities often serve both, for example speech and language support or attendance mentoring. Make the link explicit in your statement so the overlap is clear.
+Many pupils eligible for Pupil Premium also have SEND. The funding is not intended to replace SEN provision, but well-chosen activities often serve both, for example speech and language support, whole-school intervention programmes or attendance mentoring. Make the link explicit in your statement so the overlap is clear.
 
 ## A worked example
 

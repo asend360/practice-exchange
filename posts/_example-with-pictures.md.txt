@@ -1,0 +1,14 @@
+---
+title: Example post with pictures (rename to .md to use)
+slug: example-with-pictures
+date: 2099-01-01
+category: Practice
+summary: Shows how to add a cover picture and pictures inside an article.
+image: /practice-exchange/images/example-small-steps.jpg
+image_alt: A row of progress rings, the first four completed
+---
+Some text before the picture.
+
+![A visual timetable on a classroom wall](/practice-exchange/images/example-small-steps.jpg "Optional caption shown under the picture")
+
+More text after the picture.

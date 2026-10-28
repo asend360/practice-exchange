@@ -25,6 +25,10 @@ def parse(path):
         k, v = line.split(':', 1); m[k.strip()] = v.strip()
     m['sources'] = [tuple(x.strip().split('|', 1)) for x in m.get('sources', '').split(';;') if '|' in x]
     m['html'] = markdown.markdown(body.strip(), extensions=['extra', 'sane_lists'])
+    # an image on its own line becomes a figure; its title text becomes the caption
+    import re as _re
+    m['html'] = _re.sub(r'<p><img alt="([^"]*)" src="([^"]+)"(?: title="([^"]*)")? ?/?></p>',
+        lambda g: f'<figure><img src="{g.group(2)}" alt="{g.group(1)}" loading="lazy" decoding="async">' + (f'<figcaption>{g.group(3)}</figcaption>' if g.group(3) else '') + '</figure>', m['html'])
     m['mins'] = max(2, math.ceil(len(body.split()) / 220))
     m['dt'] = dt.date.fromisoformat(m['date'])
     m['url'] = f"{BASE}{m['slug']}/"
@@ -72,6 +76,14 @@ def art(post, w=640, h=280):
     return (f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="Illustration for {esc(post["category"])}" preserveAspectRatio="xMidYMid slice">{g}'
             f'<rect width="{w}" height="{h}" fill="{bg[0]}"/><circle cx="{w-60}" cy="30" r="120" fill="{bg[1]}"/><circle cx="40" cy="{h}" r="90" fill="{bg[1]}"/>{shapes}</svg>')
 
+def picture(post, banner=False):
+    """Use the post's own image if it has one, otherwise the brand illustration."""
+    img = post.get('image')
+    if img:
+        alt = esc(post.get('image_alt', ''))
+        return f'<img src="{img}" alt="{alt}" loading="{"eager" if banner else "lazy"}" decoding="async">'
+    return art(post, 960, 320) if banner else art(post)
+
 # ---------- layout ----------
 def icon(name):
     P = {'clock': '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', 'arrow': '<path d="M5 12h14M13 6l6 6-6 6"/>',
@@ -86,12 +98,12 @@ def icon(name):
 NAV = [('/features.html', 'Features'), ('/compare.html', 'Compare'), ('/pricing.html', 'Pricing'), (BASE, 'The Practice Exchange'), ('/security.html', 'Security'), ('/contact.html', 'Contact')]
 LI = 'https://www.linkedin.com/company/asend-360'; FB = 'https://www.facebook.com/people/ASEND-360/61593404010936/'
 
-def page(path, title, desc, body, extra_head='', canonical=None):
+def page(path, title, desc, body, extra_head='', canonical=None, og_image=None):
     canonical = canonical or SITE + path
     links = ''.join(f'<a href="{h}"{" aria-current=page" if h == BASE else ""}>{t}</a>' for h, t in NAV)
     doc = f'''<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{canonical}">
-<meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canonical}"><meta property="og:image" content="{SITE}/images/og-image.jpg"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canonical}"><meta property="og:image" content="{og_image or SITE + '/images/og-image.jpg'}"><meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#003574"><link rel="icon" href="{BASE}favicon.ico" sizes="48x48"><link rel="icon" href="{BASE}favicon-32x32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="{BASE}apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="The Practice Exchange" href="{BASE}feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
@@ -115,7 +127,7 @@ def page(path, title, desc, body, extra_head='', canonical=None):
 
 def card(p):
     sched = ' <span class="sched">Scheduled</span>' if p['dt'] > TODAY else ''
-    return (f'<a class="card" href="{p["url"]}" data-cat="{CAT_KEY[p["category"]]}"><div class="card-art">{art(p)}</div><div class="card-body">'
+    return (f'<a class="card" href="{p["url"]}" data-cat="{CAT_KEY[p["category"]]}"><div class="card-art">{picture(p)}</div><div class="card-body">'
             f'<div class="card-top"><span class="tag t-{CAT_KEY[p["category"]]}">{p["category"]}</span><span class="date">{fmt(p["dt"])}{sched}</span></div>'
             f'<h3>{esc(p["title"])}</h3><p>{esc(p["summary"])}</p>'
             f'<div class="card-foot"><span class="read">{icon("clock")} {p["mins"]} min read</span><span class="go">{icon("arrow")}</span></div></div></a>')
@@ -157,17 +169,17 @@ def build():
         srcs = ''.join(f'<li><a href="{u}" rel="noopener">{esc(t)}</a></li>' for t, u in p['sources'])
         promo = (f'<aside class="promo"><p class="eyebrow">How ASEND360 helps</p><h3>{esc(p["feature_title"])}</h3><p>{esc(p["feature_text"])}</p><a href="{p["feature_url"]}">Find out more {icon("arrow")}</a></aside>') if p.get('feature_title') else ''
         ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': p['title'], 'description': p['summary'], 'datePublished': p['date'], 'dateModified': p['date'],
-              'articleSection': p['category'], 'inLanguage': 'en-GB', 'mainEntityOfPage': SITE + p['url'], 'image': SITE + '/images/og-image.jpg',
+              'articleSection': p['category'], 'inLanguage': 'en-GB', 'mainEntityOfPage': SITE + p['url'], 'image': (SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image') or SITE + '/images/og-image.jpg',
               'author': {'@type': 'Organization', 'name': 'ASEND360', 'url': SITE + '/'},
               'publisher': {'@type': 'Organization', 'name': 'ASEND360', 'logo': {'@type': 'ImageObject', 'url': SITE + '/images/asend360-email-logo.png'}}}
         body = f'''<article><header class="art-hero"><div class="wrap narrow"><nav class="crumbs" aria-label="Breadcrumb"><a href="{BASE}">The Practice Exchange</a> › <span>{p['category']}</span></nav>
 <span class="tag t-{CAT_KEY[p['category']]}">{p['category']}</span><h1>{esc(p['title'])}</h1><p class="art-lede">{esc(p['summary'])}</p>
 <p class="art-meta">By the ASEND360 team &middot; {fmt_long(p['dt'])} &middot; {icon('clock')} {p['mins']} min read</p></div></header>
-<div class="art-banner wrap narrow">{art(p, 960, 320)}</div>
+<div class="art-banner wrap narrow">{picture(p, banner=True)}</div>
 <div class="wrap narrow prose">{p['html']}{promo}{f'<h2>Sources</h2><ul class="sources">{srcs}</ul>' if srcs else ''}
 <p class="disclaimer">General guidance for school staff, last reviewed {fmt_long(p['dt'])}. Statutory guidance changes, so always check the latest version on GOV.UK.</p></div></article>
 <section class="wrap latest"><div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>More from The Practice Exchange</h2></div><a class="more" href="{BASE}articles/">All articles {icon('arrow')}</a></div><div class="grid">{''.join(card(x) for x in rel)}</div></section>{SUBSCRIBE}'''
-        page(p['url'], f"{p['title']} | The Practice Exchange", p['summary'], body, extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>')
+        page(p['url'], f"{p['title']} | The Practice Exchange", p['summary'], body, extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', og_image=((SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image')))
     # feed + sitemap + 404
     items = ''.join(f'<item><title>{esc(p["title"])}</title><link>{SITE}{p["url"]}</link><guid>{SITE}{p["url"]}</guid><pubDate>{dt.datetime.combine(p["dt"], dt.time(7, 0)).strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate><category>{esc(p["category"])}</category><description>{esc(p["summary"])}</description></item>' for p in LIVE if p['dt'] <= TODAY)
     open(f'{OUT}/feed.xml', 'w', encoding='utf-8').write(f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>The Practice Exchange — ASEND360</title><link>{SITE}{BASE}</link><description>Free SEND and inclusion guidance for UK schools</description><language>en-gb</language>{items}</channel></rss>\n')

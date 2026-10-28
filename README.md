@@ -35,6 +35,36 @@ feature_text: One sentence on how ASEND360 helps.
 
 4. Click **Commit changes**. The site rebuilds in about a minute.
 
+## Add pictures
+
+**Upload the picture:** in GitHub open `static/images`, choose **Add file → Upload files**,
+drag the picture in and commit. Use a short name with no spaces, e.g. `visual-timetable.jpg`.
+
+**Cover picture** (shown on the card and at the top of the article) — add two lines to the
+post's header:
+
+```
+image: /practice-exchange/images/visual-timetable.jpg
+image_alt: A visual timetable on a classroom wall
+```
+
+Without these lines the post uses the automatic brand illustration.
+
+**Picture inside the article** — put this on its own line where you want it:
+
+```
+![A visual timetable on a classroom wall](/practice-exchange/images/visual-timetable.jpg "Optional caption")
+```
+
+Tips:
+- Landscape pictures work best. Cover pictures are cropped to roughly 16:7 on cards, 3:1 on the article.
+- Aim for about 1600 pixels wide and under 300 KB (JPG or WebP). Squoosh.app shrinks files for free.
+- Always write the description (alt text) — it is read aloud to people using screen readers.
+- Only use pictures you have the rights to. Never use photos of pupils without written consent
+  for this specific use; photos of resources, classrooms (empty) or staff with permission are safer.
+
+See `posts/_example-with-pictures.md.txt` for a full example.
+
 ## Preview locally (optional)
 
 ```

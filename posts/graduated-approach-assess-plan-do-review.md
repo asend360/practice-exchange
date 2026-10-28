@@ -1,7 +1,7 @@
 ---
 title: The graduated approach: making Assess, Plan, Do, Review work in practice
 slug: graduated-approach-assess-plan-do-review
-date: 2026-10-22
+date: 2026-10-28
 category: Practice
 summary: What the SEND Code of Practice expects from SEN support, how to run each stage of the cycle well, and why good records now make an EHC needs assessment request stronger later.
 sources: SEND Code of Practice: 0 to 25 years (DfE and DHSC)|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25

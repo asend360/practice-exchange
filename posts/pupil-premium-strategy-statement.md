@@ -1,7 +1,7 @@
 ---
 title: Your Pupil Premium strategy statement: what to publish and when
 slug: pupil-premium-strategy-statement
-date: 2026-11-03
+date: 2026-10-31
 category: Leadership
 summary: What the DfE requires schools to publish about Pupil Premium spending, how to build a statement that stands up to scrutiny, and how to show impact without drowning in spreadsheets.
 sources: Pupil premium: overview (DfE)|https://www.gov.uk/government/publications/pupil-premium ;; Using your pupil premium funding effectively (Education Endowment Foundation)|https://educationendowmentfoundation.org.uk/guidance-for-teachers/using-pupil-premium

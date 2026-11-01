@@ -1,7 +1,7 @@
 ---
 title: Small steps are still steps: tracking progress when the big milestones don't move
 slug: small-steps-are-still-steps
-date: 2026-11-02
+date: 2026-11-26
 category: Practice
 summary: Progress isn't always about the big wins. How to capture and celebrate the smaller steps that build real momentum for pupils with complex needs.
 sources: The engagement model (Standards and Testing Agency)|https://www.gov.uk/government/publications/the-engagement-model ;; SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25

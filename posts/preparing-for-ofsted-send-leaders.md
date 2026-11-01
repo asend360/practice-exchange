@@ -1,7 +1,7 @@
 ---
 title: Preparing for Ofsted: what SEND leaders need to know
 slug: preparing-for-ofsted-send-leaders
-date: 2026-11-19
+date: 2026-11-23
 category: Leadership
 summary: The key areas inspectors focus on under the renewed inspection framework, and how SEND leaders can show the impact of their provision with confidence.
 sources: School inspection toolkit and operating guide (Ofsted)|https://www.gov.uk/government/organisations/ofsted ;; SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25

@@ -35,6 +35,24 @@ feature_text: One sentence on how ASEND360 helps.
 
 4. Click **Commit changes**. The site rebuilds in about a minute.
 
+## Guest posts
+
+Add these lines to the post's header to credit a guest author:
+
+```
+guest: yes
+author: Victoria Willis
+author_role: Teaching Assistant and founder of The Calm Coach
+author_photo: /practice-exchange/images/victoria-willis-avatar.jpg
+author_bio: One or two sentences about the author.
+author_url: https://www.calm-coach.com
+author_url_label: calm-coach.com
+```
+
+The card shows "Guest spot · Name", the article shows the author's name and photo in the
+byline and an "About the author" box at the end. Use a square photo for `author_photo`.
+`image_position: 50% 22%` moves the focus of a cover photo (e.g. to keep a face in view).
+
 ## Add pictures
 
 **Upload the picture:** in GitHub open `static/images`, choose **Add file → Upload files**,

@@ -13,7 +13,7 @@ SITE = 'https://asend360.co.uk'
 MAIN = ''                      # main-site links are root-relative (same domain via proxy)
 PREVIEW = '--preview' in sys.argv
 OUT = 'dist'
-TODAY = dt.date.today()
+TODAY = dt.date.fromisoformat(os.environ['PX_TODAY']) if os.environ.get('PX_TODAY') else dt.date.today()
 CATS = ['Practice', 'Policy & Compliance', 'Leadership', 'Inside ASEND360']
 CAT_KEY = {c: c.lower().replace(' & ', '-').replace(' ', '-') for c in CATS}
 
@@ -81,8 +81,25 @@ def picture(post, banner=False):
     img = post.get('image')
     if img:
         alt = esc(post.get('image_alt', ''))
-        return f'<img src="{img}" alt="{alt}" loading="{"eager" if banner else "lazy"}" decoding="async">'
+        pos = post.get('image_position', '50% 50%')
+        return f'<img src="{img}" alt="{alt}" loading="{"eager" if banner else "lazy"}" decoding="async" style="object-position:{pos}">'
     return art(post, 960, 320) if banner else art(post)
+
+def byline(p):
+    meta = f"{fmt_long(p['dt'])} &middot; {icon('clock')} {p['mins']} min read"
+    if p.get('author'):
+        av = f'<img class="avatar" src="{p["author_photo"]}" alt="" width="44" height="44">' if p.get('author_photo') else ''
+        tag = '<span class="guest-pill">Guest spot</span>' if p.get('guest') else ''
+        return (f'<div class="byline">{av}<div><p class="by-name">{tag}By <b>{esc(p["author"])}</b>'
+                f'{", " + esc(p["author_role"]) if p.get("author_role") else ""}</p><p class="art-meta">{meta}</p></div></div>')
+    return f'<p class="art-meta">By the ASEND360 team &middot; {meta}</p>'
+
+def author_box(p):
+    if not p.get('author'): return ''
+    av = f'<img src="{p["author_photo"]}" alt="{esc(p["author"])}" width="88" height="88">' if p.get('author_photo') else ''
+    link = f'<a href="{p["author_url"]}" rel="noopener">{esc(p.get("author_url_label") or p["author_url"])} {icon("arrow")}</a>' if p.get('author_url') else ''
+    return (f'<aside class="author-box">{av}<div><p class="eyebrow">About the author</p><h3>{esc(p["author"])}</h3>'
+            f'<p class="role">{esc(p.get("author_role", ""))}</p><p>{esc(p.get("author_bio", ""))}</p>{link}</div></aside>')
 
 # ---------- layout ----------
 def icon(name):
@@ -129,7 +146,8 @@ def card(p):
     sched = ' <span class="sched">Scheduled</span>' if p['dt'] > TODAY else ''
     return (f'<a class="card" href="{p["url"]}" data-cat="{CAT_KEY[p["category"]]}"><div class="card-art">{picture(p)}</div><div class="card-body">'
             f'<div class="card-top"><span class="tag t-{CAT_KEY[p["category"]]}">{p["category"]}</span><span class="date">{fmt(p["dt"])}{sched}</span></div>'
-            f'<h3>{esc(p["title"])}</h3><p>{esc(p["summary"])}</p>'
+            + (f'<span class="guest-label">Guest spot &middot; {esc(p["author"])}</span>' if p.get('guest') and p.get('author') else '')
+            + f'<h3>{esc(p["title"])}</h3><p>{esc(p["summary"])}</p>'
             f'<div class="card-foot"><span class="read">{icon("clock")} {p["mins"]} min read</span><span class="go">{icon("arrow")}</span></div></div></a>')
 
 FILTERS = '<div class="filters" role="group" aria-label="Filter by topic"><button type="button" class="on" data-cat="all" aria-pressed="true">All</button>' + ''.join(f'<button type="button" data-cat="{CAT_KEY[c]}" aria-pressed="false">{c}</button>' for c in CATS) + '</div>'
@@ -167,16 +185,18 @@ def build():
         rel = [x for x in LIVE if x['slug'] != p['slug'] and x['category'] == p['category']][:2]
         rel += [x for x in LIVE if x['slug'] != p['slug'] and x not in rel][:3 - len(rel)]
         srcs = ''.join(f'<li><a href="{u}" rel="noopener">{esc(t)}</a></li>' for t, u in p['sources'])
+        abox = author_box(p)
         promo = (f'<aside class="promo"><p class="eyebrow">How ASEND360 helps</p><h3>{esc(p["feature_title"])}</h3><p>{esc(p["feature_text"])}</p><a href="{p["feature_url"]}">Find out more {icon("arrow")}</a></aside>') if p.get('feature_title') else ''
         ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': p['title'], 'description': p['summary'], 'datePublished': p['date'], 'dateModified': p['date'],
               'articleSection': p['category'], 'inLanguage': 'en-GB', 'mainEntityOfPage': SITE + p['url'], 'image': (SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image') or SITE + '/images/og-image.jpg',
-              'author': {'@type': 'Organization', 'name': 'ASEND360', 'url': SITE + '/'},
+              'author': ({'@type': 'Person', 'name': p['author'], 'jobTitle': p.get('author_role', ''), **({'url': p['author_url']} if p.get('author_url') else {})}
+                         if p.get('author') else {'@type': 'Organization', 'name': 'ASEND360', 'url': SITE + '/'}),
               'publisher': {'@type': 'Organization', 'name': 'ASEND360', 'logo': {'@type': 'ImageObject', 'url': SITE + '/images/asend360-email-logo.png'}}}
         body = f'''<article><header class="art-hero"><div class="wrap narrow"><nav class="crumbs" aria-label="Breadcrumb"><a href="{BASE}">The Practice Exchange</a> › <span>{p['category']}</span></nav>
 <span class="tag t-{CAT_KEY[p['category']]}">{p['category']}</span><h1>{esc(p['title'])}</h1><p class="art-lede">{esc(p['summary'])}</p>
-<p class="art-meta">By the ASEND360 team &middot; {fmt_long(p['dt'])} &middot; {icon('clock')} {p['mins']} min read</p></div></header>
-<div class="art-banner wrap narrow">{picture(p, banner=True)}</div>
-<div class="wrap narrow prose">{p['html']}{promo}{f'<h2>Sources</h2><ul class="sources">{srcs}</ul>' if srcs else ''}
+{byline(p)}</div></header>
+<div class="art-banner wrap narrow{' photo' if p.get('image') else ''}">{picture(p, banner=True)}</div>
+<div class="wrap narrow prose">{p['html']}{abox}{promo}{f'<h2>Sources</h2><ul class="sources">{srcs}</ul>' if srcs else ''}
 <p class="disclaimer">General guidance for school staff, last reviewed {fmt_long(p['dt'])}. Statutory guidance changes, so always check the latest version on GOV.UK.</p></div></article>
 <section class="wrap latest"><div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>More from The Practice Exchange</h2></div><a class="more" href="{BASE}articles/">All articles {icon('arrow')}</a></div><div class="grid">{''.join(card(x) for x in rel)}</div></section>{SUBSCRIBE}'''
         page(p['url'], f"{p['title']} | The Practice Exchange", p['summary'], body, extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', og_image=((SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image')))

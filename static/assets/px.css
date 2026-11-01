@@ -89,3 +89,20 @@ h1,h2,h3{font-family:var(--fh);color:var(--heading);line-height:1.2;letter-spaci
 .prose figure{margin:28px 0}
 .prose figure img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
 .prose figcaption{font-size:.88rem;color:var(--muted);margin-top:8px;text-align:center}
+/* Guest posts */
+.guest-label{font-size:.78rem;font-weight:600;color:var(--teal-text)}
+.byline{display:flex;align-items:center;gap:12px;margin-top:18px}
+.byline .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.7)}
+.by-name{margin:0;color:#fff;font-size:.95rem}.by-name b{font-weight:600}
+.byline .art-meta{margin:2px 0 0}
+.guest-pill{display:inline-block;margin-right:8px;padding:2px 9px;border-radius:999px;background:#E3F5F3;color:var(--navy);font:700 .68rem var(--fb);letter-spacing:.05em;text-transform:uppercase;vertical-align:1px}
+.author-box{display:grid;grid-template-columns:88px 1fr;gap:20px;align-items:start;margin:36px 0 0;padding:24px;border-radius:var(--r);border:1px solid var(--line);background:var(--bg)}
+.author-box img{width:88px;height:88px;border-radius:50%;object-fit:cover}
+.author-box h3{font-size:1.15rem;margin:0}.author-box .eyebrow{margin:0 0 4px}
+.author-box .role{margin:2px 0 8px;font-size:.9rem;color:var(--teal-text);font-weight:600}
+.author-box p{font-size:.97rem;margin:0 0 10px}
+.author-box a{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none}.author-box a svg{width:16px;height:16px}
+@media (max-width:560px){.author-box{grid-template-columns:1fr}}
+.prose blockquote{margin:30px 0;padding:22px 26px;border-radius:var(--r);background:var(--tint);border-left:4px solid var(--teal);font:600 1.2rem/1.45 var(--fh);color:var(--heading)}
+.prose blockquote p{margin:0}
+.art-banner.photo{aspect-ratio:2/1}

@@ -1,12 +1,15 @@
 ---
 title: Beyond the assembly: marking Disability History Month in school
 slug: disability-history-month
-date: 2026-11-09
+date: 2026-11-10
 category: Practice
 summary: UK Disability History Month runs from 19 November to 19 December 2026, with the theme Disability, Politics and Democracy. How schools can mark it beyond a one-off assembly, with disabled pupils' own voices at the centre.
 seo_title: Disability History Month in School: Beyond the Assembly
 seo_description: UK Disability History Month runs 19 November to 19 December 2026. How schools can mark it beyond a one-off assembly, with disabled pupils' voices at the centre.
 sources: UK Disability History Month: in education|https://ukdhm.org/get-involved/in-education/ ;; UK Disability History Month|https://ukdhm.org/ ;; UK Parliament: Disability History Month illustrated book|https://learning.parliament.uk/en/resources/disability-illustrated-book/
+image: /practice-exchange/images/disability-history-month-2026.jpg
+image_alt: UK Disability History Month, 19 November to 19 December 2026
+image_position: 50% 50%
 feature_title: PD Grids in ASEND360
 feature_url: /features#improvement
 feature_text: Disability History Month activities are valuable evidence of personal development. ASEND360's PD Grids let you record where pupils have explored British values such as democracy, mutual respect and tolerance, alongside citizenship, SMSC and enrichment, so you can see coverage across the whole year, not just in November. PD Grids © 2026 ASEND360 Limited. All rights reserved.
@@ -64,5 +67,7 @@ Language around disability matters, and preferences differ. Many people and orga
 Disability History Month isn't only for disabled pupils. It helps every child understand that disability is part of the human experience, that rights were won by people who refused to be left out, and that the barriers we remove make school better for everyone.
 
 **Useful resources:** UK Disability History Month's [guidance for schools and colleges](https://ukdhm.org/get-involved/in-education/) and this year's theme materials at [ukdhm.org](https://ukdhm.org/); UK Parliament Education's [illustrated book of disability campaigners](https://learning.parliament.uk/en/resources/disability-illustrated-book/); and the assembly resources available on Tes and Twinkl. Check any resource against the social model before you use it.
+
+*Graphic adapted from UK Disability History Month.*
 
 > "Democracy in school starts with a simple question: whose voice counts?"

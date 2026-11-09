@@ -26,7 +26,7 @@ Publishing schedule (posts go live automatically at about 6am on their date):
 - Mon 2 Nov — GUEST: Regulation starts with us, Victoria Willis (live)
 - Thu 5 Nov — Sharing information safely (live)
 - Mon 9 Nov — Reducing SENCO workload
-- Mon 9 Nov — Beyond the assembly: marking Disability History Month (publish today)
+- Tue 10 Nov — Beyond the assembly: marking Disability History Month (with the UKDHM 2026 graphic as its cover)
 - Thu 12 Nov — GUEST: The December wobble, Conor Govey
 - Mon 16 Nov — How ASEND360 helps you track EHCP outcomes
 - Thu 19 Nov — Behaviour isn't a barrier: it's a signal

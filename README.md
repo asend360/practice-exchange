@@ -81,7 +81,7 @@ Tips:
 - Only use pictures you have the rights to. Never use photos of pupils without written consent
   for this specific use; photos of resources, classrooms (empty) or staff with permission are safer.
 
-See `posts/_example-with-pictures.md.txt` for a full example.
+See `posts/regulation-starts-with-us.md` or `posts/december-wobble.md` for full examples with a cover picture and guest author.
 
 ## Preview locally (optional)
 

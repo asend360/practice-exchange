@@ -1,13 +1,14 @@
 ---
 title: Preparing for Ofsted: what SEND leaders need to know
 slug: preparing-for-ofsted-send-leaders
-date: 2026-11-23
+date: 2026-11-26
 category: Leadership
 summary: The key areas inspectors focus on under the renewed inspection framework, and how SEND leaders can show the impact of their provision with confidence.
 sources: School inspection toolkit and operating guide (Ofsted)|https://www.gov.uk/government/organisations/ofsted ;; SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25
 feature_title: Monitoring and evaluation in ASEND360
-feature_url: /features.html#improvement
+feature_url: /features#improvement
 feature_text: Observations, book looks, learning walks and your self-evaluation, organised around the inspection framework's evaluation areas.
+seo_title: Preparing for Ofsted: What SEND Leaders Need to Know
 ---
 Ofsted's renewed inspection framework, introduced in November 2025, replaced single-word judgements with report cards. Each evaluation area is graded on a five-point scale, and inclusion is now its own evaluation area as well as running through the others. For SEND leaders, that makes it more important than ever to know your provision well and to show its impact clearly.
 

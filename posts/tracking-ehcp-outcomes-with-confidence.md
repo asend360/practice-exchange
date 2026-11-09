@@ -1,13 +1,14 @@
 ---
 title: How ASEND360 helps you track EHCP outcomes with confidence
 slug: tracking-ehcp-outcomes-with-confidence
-date: 2026-11-12
+date: 2026-11-16
 category: Inside ASEND360
 summary: A look at how the EHCP Tracker brings outcomes, learning plans, provision and evidence together, so you can see progress and plan next steps.
 sources: SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25
 feature_title: EHCP tracking in ASEND360
-feature_url: /ehcp-tracking-software.html
+feature_url: /ehcp-tracking-software
 feature_text: Outcomes rated termly, calculated from ILP targets, with a ready-made annual review pack at the end of the year.
+seo_title: How ASEND360 Tracks EHCP Outcomes
 ---
 Every Education, Health and Care plan sets out outcomes a young person is working towards. Keeping track of progress against each one, across a whole year and a whole caseload, is one of the hardest parts of SEND leadership. Here's how ASEND360 approaches it.
 

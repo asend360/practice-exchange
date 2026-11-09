@@ -92,12 +92,14 @@ def byline(p):
         tag = '<span class="guest-pill">Guest spot</span>' if p.get('guest') else ''
         return (f'<div class="byline">{av}<div><p class="by-name">{tag}By <b>{esc(p["author"])}</b>'
                 f'{", " + esc(p["author_role"]) if p.get("author_role") else ""}</p><p class="art-meta">{meta}</p></div></div>')
-    return f'<p class="art-meta">By the ASEND360 team &middot; {meta}</p>'
+    return f'<p class="art-meta">By Sean Lenahan, special school headteacher and founder of ASEND360 &middot; {meta}</p>'
 
 def author_box(p):
     if not p.get('author'): return ''
     av = f'<img src="{p["author_photo"]}" alt="{esc(p["author"])}" width="88" height="88">' if p.get('author_photo') else ''
     link = f'<a href="{p["author_url"]}" rel="noopener">{esc(p.get("author_url_label") or p["author_url"])} {icon("arrow")}</a>' if p.get('author_url') else ''
+    if p.get('author_url2'):
+        link += f' <a href="{p["author_url2"]}" rel="noopener" style="margin-left:14px">{esc(p.get("author_url2_label") or p["author_url2"])} {icon("arrow")}</a>'
     return (f'<aside class="author-box">{av}<div><p class="eyebrow">About the author</p><h3>{esc(p["author"])}</h3>'
             f'<p class="role">{esc(p.get("author_role", ""))}</p><p>{esc(p.get("author_bio", ""))}</p>{link}</div></aside>')
 
@@ -112,28 +114,36 @@ def icon(name):
          'rss': '<path d="M5 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/>', 'menu': '<path d="M4 7h16M4 12h16M4 17h16"/>'}
     return f'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{P[name]}</svg>'
 
-NAV = [('/features.html', 'Features'), ('/compare.html', 'Compare'), ('/pricing.html', 'Pricing'), (BASE, 'The Practice Exchange'), ('/security.html', 'Security'), ('/contact.html', 'Contact')]
+NAV = [('/features', 'Features'), ('/compare', 'Compare'), ('/pricing', 'Pricing'), (BASE, 'Practice Exchange'), ('/security', 'Security'), ('/contact', 'Contact')]
+SOLUTIONS = [('/send-management-software', 'SEND management software'), ('/ehcp-tracking-software', 'EHCP management and tracking'),
+             ('/behaviour-recording-software', 'Behaviour recording and reporting'), ('/provision-mapping-software', 'Provision mapping'),
+             ('/special-school-software', 'Special school software'), ('/attendance-analysis-software', 'Attendance analysis'),
+             ('/pupil-premium-strategy-software', 'Pupil Premium strategy'), ('/single-central-record-software', 'Single Central Record'),
+             ('/mis-integration', 'MIS integration (Wonde)')]
+PLAUSIBLE = '<script defer data-domain="asend360.co.uk" src="https://plausible.io/js/script.js"></script>'
 LI = 'https://www.linkedin.com/company/asend-360'; FB = 'https://www.facebook.com/people/ASEND-360/61593404010936/'
 
-def page(path, title, desc, body, extra_head='', canonical=None, og_image=None):
+def page(path, title, desc, body, extra_head='', canonical=None, og_image=None, noindex=False):
     canonical = canonical or SITE + path
     links = ''.join(f'<a href="{h}"{" aria-current=page" if h == BASE else ""}>{t}</a>' for h, t in NAV)
+    sol = '<details class="dd"><summary>Solutions</summary><div class="dd-menu">' + ''.join(f'<a href="{h}">{t}</a>' for h, t in SOLUTIONS) + '</div></details>'
+    links = links.replace('</a>', '</a>' + sol, 1)
     doc = f'''<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)}</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{canonical}">
+<title>{esc(title)}</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{canonical}">{"<meta name=robots content=noindex>" if noindex else ""}
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canonical}"><meta property="og:image" content="{og_image or SITE + '/images/og-image.jpg'}"><meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#003574"><link rel="icon" href="{BASE}favicon.ico" sizes="48x48"><link rel="icon" href="{BASE}favicon-32x32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="{BASE}apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="The Practice Exchange" href="{BASE}feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="{BASE}assets/px.css?v={VER}"><script src="{BASE}assets/px.js?v={VER}" defer></script>{extra_head}</head><body>
+<link rel="stylesheet" href="{BASE}assets/px.css?v={VER}"><script src="{BASE}assets/px.js?v={VER}" defer></script>{PLAUSIBLE}{extra_head}</head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="hdr"><div class="wrap hdr-in"><a class="logo" href="/" aria-label="ASEND360 home"><picture><source srcset="{BASE}brand/asend360-logo-no-tagline-reversed.svg" media="(prefers-color-scheme: dark)"><img src="{BASE}brand/asend360-logo-no-tagline.svg" alt="" width="124" height="52"></picture></a>
 <nav class="nav" id="nav" aria-label="Main">{links}</nav>
-<div class="hdr-cta"><a class="btn ghost" href="https://app.asend360.co.uk">Sign in</a><a class="btn primary" href="/contact.html">Book a demo</a></div>
+<div class="hdr-cta"><a class="btn ghost" href="https://app.asend360.co.uk">Sign in</a><a class="btn primary" href="/contact">Book a demo</a></div>
 <button class="menu" type="button" aria-controls="nav" aria-expanded="false" aria-label="Open menu">{icon('menu')}</button></div></header>
 <main id="main"{' data-limit=6' if path==BASE else ''}>{body}</main>
 <footer class="ftr"><div class="wrap ftr-in"><div><picture><source srcset="{BASE}brand/asend360-logo-no-tagline-reversed.svg" media="(prefers-color-scheme: dark)"><img src="{BASE}brand/asend360-logo-no-tagline.svg" alt="ASEND360" width="150" height="63"></picture>
 <p>Free, practical SEND and inclusion guidance from the team behind ASEND360.</p></div>
-<nav aria-label="Footer"><a href="/">Home</a><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="{BASE}">The Practice Exchange</a><a href="/privacy.html">Privacy</a><a href="/contact.html">Contact</a></nav>
+<nav aria-label="Footer"><a href="/">Home</a><a href="/features">Features</a><a href="/pricing">Pricing</a><a href="{BASE}">The Practice Exchange</a><a href="{BASE}articles/">Articles</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a></nav>
 <div class="social"><a href="{LI}" rel="noopener me" aria-label="ASEND360 on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="{FB}" rel="noopener me" aria-label="ASEND360 on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a><a href="{BASE}feed.xml" aria-label="RSS feed">{icon('rss')}</a></div></div>
 <div class="wrap ftr-legal">&copy; {TODAY.year} ASEND360 Limited &middot; Registered in England and Wales, company no. 17492700 &middot; Registered office: 66 Paul Street, London, EC2A 4NA</div></footer>
 </body></html>'''
@@ -161,6 +171,9 @@ HERO_ART = '''<div class="hero-art" aria-hidden="true"><svg viewBox="0 0 420 420
     (f'<circle cx="{110+c*66}" cy="{120+r*66}" r="22" fill="none" stroke="url(#hg)" stroke-width="7" stroke-dasharray="{138*min(1,(r*4+c+1)/9):.0f} 140" transform="rotate(-90 {110+c*66} {120+r*66})"/>' if r*4+c < 10 else '')
     for r in range(4) for c in range(4)) + '''</svg><div class="quote">&ldquo;Small steps build lasting change.&rdquo;</div></div>'''
 
+SEAN = {'@type': 'Person', 'name': 'Sean Lenahan', 'jobTitle': 'Headteacher', 'description': 'Serving special school headteacher and founder of ASEND360', 'url': SITE + '/'}
+PUBLISHER = {'@type': 'Organization', 'name': 'ASEND360 Limited', 'url': SITE + '/', 'logo': {'@type': 'ImageObject', 'url': SITE + '/images/asend360-email-logo.png'}}
+
 def build():
     shutil.rmtree(OUT, ignore_errors=True); os.makedirs(OUT)
     shutil.copytree('static', OUT, dirs_exist_ok=True)
@@ -174,12 +187,15 @@ def build():
 <section class="wrap latest"><div class="sec-head"><div><p class="eyebrow">Latest articles</p><h2>Practical ideas for real-world challenges</h2></div><a class="more" href="{BASE}articles/">View all articles {icon('arrow')}</a></div>
 <div class="grid" id="grid">{allcards}</div><p class="empty" hidden>No articles in this topic yet &mdash; new ones are added twice a week.</p></section>
 {SUBSCRIBE}{EXPLORE}'''
-    page(BASE, 'The Practice Exchange: Free SEND & Inclusion Guidance | ASEND360',
-         'Free, practical articles for UK schools on SEND practice, policy and compliance, and leadership — new posts twice a week from the team behind ASEND360.', body)
+    page(BASE, 'The Practice Exchange: Free SEND Guidance | ASEND360',
+         'Free, practical articles for UK schools on SEND practice, policy and compliance, and leadership, with new posts twice a week from ASEND360.', body,
+         extra_head='<script type="application/ld+json">' + json.dumps({'@context': 'https://schema.org', '@type': 'Blog', 'name': 'The Practice Exchange', 'url': SITE + BASE,
+             'description': 'Free SEND and inclusion guidance for UK schools', 'inLanguage': 'en-GB', 'publisher': PUBLISHER,
+             'blogPost': [{'@type': 'BlogPosting', 'headline': p['title'], 'url': SITE + p['url'], 'datePublished': p['date']} for p in LIVE if p['dt'] <= TODAY]}, ensure_ascii=False) + '</script>')
     # all articles
     body = f'''<section class="hero slim"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="{BASE}">The Practice Exchange</a> › <span>All articles</span></nav><h1>All articles</h1>{FILTERS}</div></section>
 <section class="wrap latest"><div class="grid" id="grid">{allcards}</div><p class="empty" hidden>No articles in this topic yet.</p></section>{SUBSCRIBE}'''
-    page(BASE + 'articles/', 'All articles | The Practice Exchange | ASEND360', 'Every article from The Practice Exchange: free SEND and inclusion guidance for UK schools.', body)
+    page(BASE + 'articles/', 'All Articles | The Practice Exchange | ASEND360', 'Every article from The Practice Exchange: free, practical SEND and inclusion guidance for UK schools, from ASEND360.', body)
     # articles
     for p in LIVE:
         rel = [x for x in LIVE if x['slug'] != p['slug'] and x['category'] == p['category']][:2]
@@ -187,25 +203,26 @@ def build():
         srcs = ''.join(f'<li><a href="{u}" rel="noopener">{esc(t)}</a></li>' for t, u in p['sources'])
         abox = author_box(p)
         promo = (f'<aside class="promo"><p class="eyebrow">How ASEND360 helps</p><h3>{esc(p["feature_title"])}</h3><p>{esc(p["feature_text"])}</p><a href="{p["feature_url"]}">Find out more {icon("arrow")}</a></aside>') if p.get('feature_title') else ''
-        ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': p['title'], 'description': p['summary'], 'datePublished': p['date'], 'dateModified': p['date'],
+        ld = {'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': p['title'], 'description': p['summary'], 'datePublished': p['date'], 'dateModified': p.get('updated', p['date']),
               'articleSection': p['category'], 'inLanguage': 'en-GB', 'mainEntityOfPage': SITE + p['url'], 'image': (SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image') or SITE + '/images/og-image.jpg',
               'author': ({'@type': 'Person', 'name': p['author'], 'jobTitle': p.get('author_role', ''), **({'url': p['author_url']} if p.get('author_url') else {})}
-                         if p.get('author') else {'@type': 'Organization', 'name': 'ASEND360', 'url': SITE + '/'}),
-              'publisher': {'@type': 'Organization', 'name': 'ASEND360', 'logo': {'@type': 'ImageObject', 'url': SITE + '/images/asend360-email-logo.png'}}}
+                         if p.get('author') else SEAN),
+              'publisher': PUBLISHER}
         body = f'''<article><header class="art-hero"><div class="wrap narrow"><nav class="crumbs" aria-label="Breadcrumb"><a href="{BASE}">The Practice Exchange</a> › <span>{p['category']}</span></nav>
 <span class="tag t-{CAT_KEY[p['category']]}">{p['category']}</span><h1>{esc(p['title'])}</h1><p class="art-lede">{esc(p['summary'])}</p>
 {byline(p)}</div></header>
 <div class="art-banner wrap narrow{' photo' if p.get('image') else ''}">{picture(p, banner=True)}</div>
-<div class="wrap narrow prose">{p['html']}{abox}{promo}{f'<h2>Sources</h2><ul class="sources">{srcs}</ul>' if srcs else ''}
+<div class="wrap narrow prose">{p['html']}{abox}{promo}<p class="rel-sol">Explore: <a href="/send-management-software">SEND management software</a> &middot; <a href="/ehcp-tracking-software">EHCP management software</a> &middot; <a href="/special-school-software">special school software</a></p>{f'<h2>Sources</h2><ul class="sources">{srcs}</ul>' if srcs else ''}
 <p class="disclaimer">General guidance for school staff, last reviewed {fmt_long(p['dt'])}. Statutory guidance changes, so always check the latest version on GOV.UK.</p></div></article>
 <section class="wrap latest"><div class="sec-head"><div><p class="eyebrow">Keep reading</p><h2>More from The Practice Exchange</h2></div><a class="more" href="{BASE}articles/">All articles {icon('arrow')}</a></div><div class="grid">{''.join(card(x) for x in rel)}</div></section>{SUBSCRIBE}'''
-        page(p['url'], f"{p['title']} | The Practice Exchange", p['summary'], body, extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', og_image=((SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image')))
+        st = p.get('seo_title') or p['title']
+        page(p['url'], st if len(st) > 49 else st + ' | ASEND360', p.get('seo_description') or p['summary'], body, extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', og_image=((SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image')))
     # feed + sitemap + 404
     items = ''.join(f'<item><title>{esc(p["title"])}</title><link>{SITE}{p["url"]}</link><guid>{SITE}{p["url"]}</guid><pubDate>{dt.datetime.combine(p["dt"], dt.time(7, 0)).strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate><category>{esc(p["category"])}</category><description>{esc(p["summary"])}</description></item>' for p in LIVE if p['dt'] <= TODAY)
     open(f'{OUT}/feed.xml', 'w', encoding='utf-8').write(f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>The Practice Exchange — ASEND360</title><link>{SITE}{BASE}</link><description>Free SEND and inclusion guidance for UK schools</description><language>en-gb</language>{items}</channel></rss>\n')
     urls = [SITE + BASE, SITE + BASE + 'articles/'] + [SITE + p['url'] for p in LIVE if p['dt'] <= TODAY]
     open(f'{OUT}/sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{u}</loc></url>\n' for u in urls) + '</urlset>\n')
-    page(BASE + '404.html', 'Page not found | The Practice Exchange', 'Page not found.', f'<section class="hero slim"><div class="wrap"><h1>Page not found</h1><p class="hero-lede">That article may have moved. <a href="{BASE}">Browse all articles</a>.</p></div></section>')
+    page(BASE + '404.html', 'Page not found | ASEND360', 'Page not found.', f'<section class="hero slim"><div class="wrap"><h1>Page not found</h1><p class="hero-lede">That article may have moved. <a href="{BASE}">Browse all articles</a>.</p></div></section>', noindex=True)
     print(f'built {len(LIVE)} of {len(POSTS)} posts ({"preview" if PREVIEW else "live"}) -> {OUT}/')
 
 VER = hashlib.sha1(open('static/assets/px.css', 'rb').read() + open('static/assets/px.js', 'rb').read()).hexdigest()[:8] if os.path.exists('static/assets/px.css') else '1'

@@ -6,8 +6,10 @@ category: Practice
 summary: What the SEND Code of Practice expects from SEN support, how to run each stage of the cycle well, and why good records now make an EHC needs assessment request stronger later.
 sources: SEND Code of Practice: 0 to 25 years (DfE and DHSC)|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25
 feature_title: SEN support in ASEND360
-feature_url: /features.html#send
+feature_url: /send-management-software
 feature_text: Plans, provision and reviews in one record, so every turn of the cycle builds on the last.
+seo_title: The Graduated Approach: Assess, Plan, Do, Review
+seo_description: How to run SEN support well at each stage of the assess, plan, do, review cycle, and why good records strengthen an EHC needs assessment request.
 ---
 When a pupil is identified as having special educational needs, the SEND Code of Practice expects schools to take action to remove barriers to learning and put effective special educational provision in place. It describes this as **SEN support**, delivered through a four-part cycle: assess, plan, do and review. Each turn of the cycle should refine what the school knows about the pupil and what works for them.
 

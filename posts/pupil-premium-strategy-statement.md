@@ -6,8 +6,10 @@ category: Leadership
 summary: What the DfE requires schools to publish about Pupil Premium spending, how to build a statement that stands up to scrutiny, and how to show impact without drowning in spreadsheets.
 sources: Pupil premium: overview (DfE)|https://www.gov.uk/government/publications/pupil-premium ;; Using your pupil premium funding effectively (Education Endowment Foundation)|https://educationendowmentfoundation.org.uk/guidance-for-teachers/using-pupil-premium
 feature_title: Pupil Premium in ASEND360
-feature_url: /pupil-premium-strategy-software.html
+feature_url: /pupil-premium-strategy-software
 feature_text: Write your statement in the DfE template, monitor termly and produce the impact review from the same records.
+seo_title: Pupil Premium Strategy Statement: What to Publish
+seo_description: What the DfE requires schools to publish about Pupil Premium spending, and how to build a statement that shows impact.
 ---
 Schools that receive Pupil Premium funding must publish a strategy statement on their website showing how the funding will be used and what impact last year's spending had. The DfE provides a template that schools are required to use, and sets the publication deadline each year. It is currently **31 December**.
 
@@ -43,7 +45,7 @@ Monitoring through the year makes this much easier. Rating each activity termly 
 
 ## Pupils with SEND
 
-Many pupils eligible for Pupil Premium also have SEND. The funding is not intended to replace SEN provision, but well-chosen activities often serve both, for example speech and language support, whole-school intervention programmes or attendance mentoring. Make the link explicit in your statement so the overlap is clear.
+Many pupils eligible for Pupil Premium also have SEND. The funding is not intended to replace SEN provision, but well-chosen activities often serve both, for example speech and language support or attendance mentoring. Make the link explicit in your statement so the overlap is clear.
 
 ## A worked example
 

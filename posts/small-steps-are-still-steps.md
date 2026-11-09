@@ -1,13 +1,15 @@
 ---
 title: Small steps are still steps: tracking progress when the big milestones don't move
 slug: small-steps-are-still-steps
-date: 2026-11-26
+date: 2026-11-30
 category: Practice
 summary: Progress isn't always about the big wins. How to capture and celebrate the smaller steps that build real momentum for pupils with complex needs.
 sources: The engagement model (Standards and Testing Agency)|https://www.gov.uk/government/publications/the-engagement-model ;; SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25
 feature_title: Progressive assessment in ASEND360
-feature_url: /features.html#assessment
+feature_url: /special-school-software
 feature_text: Small-step frameworks across the four broad areas of need, subject frameworks and the Engagement Model, with evidence attached to every step.
+seo_title: Small Steps Are Still Steps: Tracking SEND Progress
+seo_description: Progress isn’t always about the big wins. How to capture and celebrate the smaller steps that build momentum for pupils with complex needs.
 ---
 For many pupils with SEND, the milestones that dominate school data — a new reading level, a test score, a national curriculum stage — can stay still for months. That doesn't mean nothing is happening. It usually means the measure is too coarse to see the progress being made.
 

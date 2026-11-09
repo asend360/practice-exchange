@@ -6,8 +6,10 @@ category: Policy & Compliance
 summary: How the DfE defines persistent and severe absence, what the statutory attendance guidance expects of schools, and practical ways to support pupils with SEND whose attendance is falling.
 sources: Working together to improve school attendance (DfE)|https://www.gov.uk/government/publications/working-together-to-improve-school-attendance
 feature_title: Attendance analysis in ASEND360
-feature_url: /attendance-analysis-software.html
+feature_url: /attendance-analysis-software
 feature_text: Spot persistent absence early, see patterns by day and session, and turn them into an attendance plan.
+seo_title: Persistent and Severe Absence: What Schools Must Do
+seo_description: What the DfE thresholds for persistent and severe absence mean, what the statutory guidance expects, and how to support pupils with SEND.
 ---
 Attendance remains a national priority, and the Department for Education's guidance, *Working together to improve school attendance*, became statutory in August 2024. It sets clear expectations for how schools monitor attendance, intervene early and work with families and local authorities.
 

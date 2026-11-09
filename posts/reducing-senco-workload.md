@@ -6,8 +6,9 @@ category: Leadership
 summary: Practical ways for leaders to streamline SEND systems, share the load across the school and keep the SENCO's time focused on what matters most.
 sources: SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25
 feature_title: SEND management in ASEND360
-feature_url: /send-management-software.html
+feature_url: /send-management-software
 feature_text: One record per pupil, with plans, provision, reviews and evidence connected — so information is entered once and used everywhere.
+seo_title: Reducing SENCO Workload Without Losing Momentum
 ---
 The SENCO role has grown steadily: more pupils with identified needs, more plans and reviews, more liaison with families and external services. When the workload becomes unmanageable, the strategic work — improving provision across the school — is usually the first thing to go. Leaders can change that.
 

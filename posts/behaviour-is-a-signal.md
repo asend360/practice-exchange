@@ -1,13 +1,14 @@
 ---
 title: Behaviour isn't a barrier: it's a signal
 slug: behaviour-is-a-signal
-date: 2026-11-16
+date: 2026-11-19
 category: Practice
 summary: What to look for, what to try and how to respond when a pupil's behaviour is telling you something more — particularly for pupils with SEND.
 sources: Behaviour in schools (DfE)|https://www.gov.uk/government/publications/behaviour-in-schools--2 ;; SEND Code of Practice: 0 to 25 years|https://www.gov.uk/government/publications/send-code-of-practice-0-to-25
 feature_title: Behaviour support in ASEND360
-feature_url: /features.html#behaviour
+feature_url: /behaviour-recording-software
 feature_text: Incidents, ABC charts, functional assessment tools and behaviour support plans, linked to the pupil's needs and provision.
+seo_title: Behaviour Isn't a Barrier: It's a Signal
 ---
 All behaviour communicates something. For many pupils with SEND, behaviour that challenges is the clearest signal we have that a need isn't being met — whether that's communication, sensory, emotional or physical. Treating behaviour as information, rather than only as something to stop, leads to better support and fewer repeat incidents.
 

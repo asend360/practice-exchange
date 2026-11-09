@@ -106,3 +106,15 @@ h1,h2,h3{font-family:var(--fh);color:var(--heading);line-height:1.2;letter-spaci
 .prose blockquote{margin:30px 0;padding:22px 26px;border-radius:var(--r);background:var(--tint);border-left:4px solid var(--teal);font:600 1.2rem/1.45 var(--fh);color:var(--heading)}
 .prose blockquote p{margin:0}
 .art-banner.photo{aspect-ratio:2/1}
+/* Solutions dropdown + related links */
+.dd{position:relative}.dd summary{list-style:none;cursor:pointer;padding:8px 12px;border-radius:9px;font-weight:500;font-size:.94rem;color:var(--text)}
+.dd summary::-webkit-details-marker{display:none}.dd summary::after{content:" ▾";font-size:.8em}.dd summary:hover,.dd[open] summary{background:var(--sub)}
+.dd-menu{position:absolute;top:calc(100% + 8px);left:0;min-width:270px;padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh2);z-index:40;display:grid}
+.dd-menu a{padding:9px 12px;border-radius:9px;font-size:.92rem;color:var(--text);text-decoration:none;white-space:nowrap}.dd-menu a:hover{background:var(--tint);color:var(--heading)}
+@media (max-width:1060px){.dd-menu{position:static;box-shadow:none;border:0;padding:0 0 0 10px}}
+.rel-sol{margin-top:22px;font-size:.95rem;color:var(--muted)}.rel-sol a{font-weight:600}
+/* Header fit (matches main site) */
+.nav a,.dd summary,.btn{white-space:nowrap}
+.nav a,.dd summary{padding:8px 9px;font-size:.93rem}
+.hdr-in{gap:16px}
+@media (max-width:1240px){.nav{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;padding:12px 20px 18px;background:var(--bg);border-bottom:1px solid var(--line);margin:0}.nav.open{display:flex}.menu{display:inline-flex}.hdr-cta{display:none}}

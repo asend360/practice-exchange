@@ -15,8 +15,10 @@ author_bio: Victoria Willis is a primary school Teaching Assistant, craniosacral
 author_url: https://www.calm-coach.com
 author_url_label: calm-coach.com
 feature_title: Pupil profiles in ASEND360
-feature_url: /features.html#behaviour
+feature_url: /features#behaviour
 feature_text: Every child shows dysregulation differently. ASEND360's Pupil Profile keeps each pupil's signs, triggers and the strategies that help in one place, so every adult who works with them can respond consistently.
+seo_title: Regulation Starts With Us: Calm Adults, Calm Classrooms
+seo_description: Teaching Assistant Victoria Willis on why adult calm matters, regulation across the school day, and a three-step reset to try tomorrow.
 ---
 ## Why I started
 

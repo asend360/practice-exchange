@@ -6,8 +6,10 @@ category: Policy & Compliance
 summary: Simple steps to keep information secure, meet UK GDPR expectations and build trust with families and colleagues — without becoming a barrier to supporting the child.
 sources: Data protection in schools (DfE)|https://www.gov.uk/guidance/data-protection-in-schools ;; Information sharing: advice for practitioners (HM Government)|https://www.gov.uk/government/publications/safeguarding-practitioners-information-sharing-advice ;; Keeping children safe in education (DfE)|https://www.gov.uk/government/publications/keeping-children-safe-in-education--2
 feature_title: Data protection in ASEND360
-feature_url: /data-protection.html
+feature_url: /data-protection
 feature_text: UK-hosted, role-based access, tiered safeguarding records and a full audit trail — with a DPIA Support Pack for your DPO.
+seo_title: Sharing Information Safely in SEND Practice
+seo_description: Simple steps to keep pupil information secure, meet UK GDPR expectations and build trust with families, without blocking support for the child.
 ---
 SEND work runs on information: reports from therapists, health plans, family circumstances, safeguarding concerns. Sharing the right information with the right people is what keeps pupils safe and well supported. Sharing it carelessly is one of the most common causes of data breaches in schools.
 

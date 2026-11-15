@@ -9,6 +9,7 @@ feature_title: Behaviour support in ASEND360
 feature_url: /behaviour-recording-software
 feature_text: Incidents, ABC charts, functional assessment tools and behaviour support plans, linked to the pupil's needs and provision.
 seo_title: Behaviour Isn't a Barrier: It's a Signal
+art: signal
 ---
 All behaviour communicates something. For many pupils with SEND, behaviour that challenges is the clearest signal we have that a need isn't being met — whether that's communication, sensory, emotional or physical. Treating behaviour as information, rather than only as something to stop, leads to better support and fewer repeat incidents.
 

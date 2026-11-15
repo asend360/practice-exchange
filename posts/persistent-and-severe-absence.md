@@ -10,6 +10,7 @@ feature_url: /attendance-analysis-software
 feature_text: Spot persistent absence early, see patterns by day and session, and turn them into an attendance plan.
 seo_title: Persistent and Severe Absence: What Schools Must Do
 seo_description: What the DfE thresholds for persistent and severe absence mean, what the statutory guidance expects, and how to support pupils with SEND.
+art: calendar
 ---
 Attendance remains a national priority, and the Department for Education's guidance, *Working together to improve school attendance*, became statutory in August 2024. It sets clear expectations for how schools monitor attendance, intervene early and work with families and local authorities.
 

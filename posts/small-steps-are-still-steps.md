@@ -10,6 +10,7 @@ feature_url: /special-school-software
 feature_text: Small-step frameworks across the four broad areas of need, subject frameworks and the Engagement Model, with evidence attached to every step.
 seo_title: Small Steps Are Still Steps: Tracking SEND Progress
 seo_description: Progress isn’t always about the big wins. How to capture and celebrate the smaller steps that build momentum for pupils with complex needs.
+art: stones
 ---
 For many pupils with SEND, the milestones that dominate school data — a new reading level, a test score, a national curriculum stage — can stay still for months. That doesn't mean nothing is happening. It usually means the measure is too coarse to see the progress being made.
 

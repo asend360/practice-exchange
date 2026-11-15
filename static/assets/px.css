@@ -118,3 +118,17 @@ h1,h2,h3{font-family:var(--fh);color:var(--heading);line-height:1.2;letter-spaci
 .nav a,.dd summary{padding:8px 9px;font-size:.93rem}
 .hdr-in{gap:16px}
 @media (max-width:1240px){.nav{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;padding:12px 20px 18px;background:var(--bg);border-bottom:1px solid var(--line);margin:0}.nav.open{display:flex}.menu{display:inline-flex}.hdr-cta{display:none}}
+/* Email sign-up */
+.sub-box{grid-template-columns:auto 1fr minmax(300px,420px)}
+.sub-form{margin:0}
+.sub-row{display:flex;gap:8px}
+.sub-row input{flex:1;min-width:0;padding:11px 14px;border:1px solid #6B7488;border-radius:10px;font:inherit;background:var(--bg);color:var(--text)}
+.sub-row input:focus{outline:3px solid #0381CA;outline-offset:1px;border-color:#0381CA}
+.sub-small{font-size:.8rem!important;margin:8px 0 0!important}
+.sub-msg{font-size:.9rem!important;font-weight:600;margin:6px 0 0!important;color:var(--heading)!important}
+.sub-msg:empty{display:none}
+.sub-msg.err{color:#B42318!important}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:960px){.sub-box{grid-template-columns:auto 1fr}.sub-form{grid-column:1/-1}}
+@media (max-width:760px){.sub-box{grid-template-columns:1fr}.sub-row{flex-direction:column}}

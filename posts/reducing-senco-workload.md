@@ -9,6 +9,7 @@ feature_title: SEND management in ASEND360
 feature_url: /send-management-software
 feature_text: One record per pupil, with plans, provision, reviews and evidence connected — so information is entered once and used everywhere.
 seo_title: Reducing SENCO Workload Without Losing Momentum
+art: scales
 ---
 The SENCO role has grown steadily: more pupils with identified needs, more plans and reviews, more liaison with families and external services. When the workload becomes unmanageable, the strategic work — improving provision across the school — is usually the first thing to go. Leaders can change that.
 

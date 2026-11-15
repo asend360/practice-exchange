@@ -53,6 +53,12 @@ The card shows "Guest spot · Name", the article shows the author's name and pho
 byline and an "About the author" box at the end. Use a square photo for `author_photo`.
 `image_position: 50% 22%` moves the focus of a cover photo (e.g. to keep a face in view).
 
+## Choose an illustration
+
+Articles without a photo show a brand illustration. Pick one by adding a line to the post's header, e.g. `art: calendar`.
+Choices: rings, stones, cycle, calendar, book, puzzle, heart, signal, shield, clipboard, padlock, bars, signpost, scales,
+target, magnifier, window, home-school. Without an `art:` line, one is chosen from the article's topic.
+
 ## Add pictures
 
 **Upload the picture:** in GitHub open `static/images`, choose **Add file → Upload files**,

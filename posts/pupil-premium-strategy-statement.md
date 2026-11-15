@@ -10,6 +10,7 @@ feature_url: /pupil-premium-strategy-software
 feature_text: Write your statement in the DfE template, monitor termly and produce the impact review from the same records.
 seo_title: Pupil Premium Strategy Statement: What to Publish
 seo_description: What the DfE requires schools to publish about Pupil Premium spending, and how to build a statement that shows impact.
+art: target
 ---
 Schools that receive Pupil Premium funding must publish a strategy statement on their website showing how the funding will be used and what impact last year's spending had. The DfE provides a template that schools are required to use, and sets the publication deadline each year. It is currently **31 December**.
 

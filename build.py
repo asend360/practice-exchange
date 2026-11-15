@@ -42,39 +42,119 @@ fmt_long = lambda d: d.strftime('%-d %B %Y')
 esc = html.escape
 
 # ---------- illustrations (no photos of children; brand-coloured, deterministic) ----------
+def _designs(gid, seed):
+    """Brand illustrations, drawn in a 640x280 frame. Navy, white, soft blue lines, one gradient accent."""
+    N, W, L, T = '#003574', '#fff', '#C9D6E8', '#08ACAC'
+    D = {}
+    # original four
+    r = ''
+    for i in range(7):
+        x = 90 + i * 76; y = 150 + (seed >> i) % 3 * 6 - 6; C = 2 * math.pi * 26; frac = min(1, (i + 1) / 5)
+        r += f'<circle cx="{x}" cy="{y}" r="26" fill="{W}" stroke="#DDE2EA" stroke-width="7"/>'
+        if i < 5: r += f'<circle cx="{x}" cy="{y}" r="26" fill="none" stroke="{gid}" stroke-width="7" stroke-dasharray="{C*frac:.0f} {C:.0f}" transform="rotate(-90 {x} {y})"/>'
+    D['rings'] = r + f'<path d="M70 222 H570" stroke="{T}" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 12"/>'
+    D['shield'] = (f'<rect x="170" y="62" width="190" height="160" rx="14" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        + ''.join(f'<rect x="196" y="{92+i*26}" width="{138-(i%2)*40}" height="9" rx="4.5" fill="#D2E0F1"/>' for i in range(5))
+        + f'<path d="M420 70 l70 26 v52 c0 40 -30 66 -70 80 c-40 -14 -70 -40 -70 -80 v-52z" fill="{gid}"/>'
+        + f'<path d="M392 150 l20 20 l38 -42" fill="none" stroke="{W}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>')
+    D['bars'] = (''.join(f'<rect x="{150+i*58}" y="{232-hgt}" width="38" height="{hgt}" rx="8" fill="{gid if i==4 else W}" stroke="{L}" stroke-width="{0 if i==4 else 3}"/>' for i, hgt in enumerate([60, 90, 80, 120, 150]))
+        + f'<circle cx="500" cy="96" r="42" fill="{W}" stroke="{L}" stroke-width="3"/><path d="M500 64 l12 32 l-12 32 l-12 -32z" fill="{N}"/>')
+    D['window'] = (f'<rect x="120" y="50" width="400" height="190" rx="14" fill="{W}" stroke="{L}" stroke-width="3"/><rect x="120" y="50" width="400" height="30" rx="14" fill="{N}"/><rect x="120" y="66" width="400" height="14" fill="{N}"/>'
+        + ''.join(f'<circle cx="{142+i*16}" cy="65" r="4" fill="{W}" opacity=".7"/>' for i in range(3))
+        + '<rect x="140" y="98" width="90" height="124" rx="8" fill="#E6EEF7"/>'
+        + ''.join(f'<rect x="250" y="{100+i*30}" width="250" height="20" rx="6" fill="#F3F5F8"/><rect x="250" y="{100+i*30}" width="{60+((seed>>i)%5)*38}" height="20" rx="6" fill="{gid}"/>' for i in range(4)))
+    # new designs
+    D['stones'] = (f'<path d="M80 226 C 170 226, 210 176, 300 172 S 470 120, 560 92" fill="none" stroke="{T}" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>'
+        + ''.join(f'<ellipse cx="{x}" cy="{y+8}" rx="{rx}" ry="{rx*0.32:.0f}" fill="#C9D6E8" opacity=".55"/><ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{rx*0.38:.0f}" fill="{gid if i==4 else W}" stroke="{L}" stroke-width="{0 if i==4 else 3}"/>'
+                  for i, (x, y, rx) in enumerate([(110, 222, 44), (210, 196, 42), (310, 170, 42), (410, 140, 42), (510, 108, 46)]))
+        + f'<path d="M512 96 v-48" stroke="{N}" stroke-width="5" stroke-linecap="round"/><path d="M514 48 l34 12 l-34 12z" fill="{N}"/>')
+    _cy = ''
+    for i, a in enumerate([-math.pi/2, 0, math.pi/2, math.pi]):
+        x, y = 320 + 92*math.cos(a), 140 + 92*math.sin(a)
+        _cy += f'<circle cx="{x:.0f}" cy="{y:.0f}" r="32" fill="{gid if i==0 else W}" stroke="{L}" stroke-width="{0 if i==0 else 3}"/><rect x="{x-14:.0f}" y="{y-5:.0f}" width="28" height="10" rx="5" fill="{W if i==0 else "#D2E0F1"}"/>'
+        b0, b1 = a + 0.44, a + math.pi/2 - 0.5
+        sx, sy, ex, ey = 320+92*math.cos(b0), 140+92*math.sin(b0), 320+92*math.cos(b1), 140+92*math.sin(b1)
+        _cy += f'<path d="M{sx:.1f} {sy:.1f} A92 92 0 0 1 {ex:.1f} {ey:.1f}" fill="none" stroke="{N}" stroke-width="5" stroke-linecap="round"/>'
+        t = b1 + math.pi/2; ang = math.degrees(t)
+        _cy += f'<path d="M0 -8 L12 0 L0 8" transform="translate({ex:.1f} {ey:.1f}) rotate({ang:.0f})" fill="none" stroke="{N}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+    D['cycle'] = _cy
+    cal = f'<rect x="170" y="48" width="300" height="196" rx="16" fill="{W}" stroke="{L}" stroke-width="3"/><rect x="170" y="48" width="300" height="44" rx="16" fill="{N}"/><rect x="170" y="74" width="300" height="18" fill="{N}"/>'
+    cal += f'<rect x="215" y="36" width="10" height="26" rx="5" fill="{N}"/><rect x="415" y="36" width="10" height="26" rx="5" fill="{N}"/>'
+    for rr in range(3):
+        for c in range(5):
+            x, y = 196 + c * 52, 110 + rr * 42
+            on = (rr * 5 + c + seed) % 7 != 3
+            cal += f'<rect x="{x}" y="{y}" width="38" height="30" rx="7" fill="{"#E3F5F3" if on else "#F3F5F8"}"/>'
+            if on: cal += f'<path d="M{x+11} {y+15} l6 6 l11 -12" fill="none" stroke="{T}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'
+    D['calendar'] = cal
+    D['book'] = (f'<path d="M320 82 C 270 62, 200 62, 150 74 V 230 C 200 218, 270 218, 320 238 Z" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        f'<path d="M320 82 C 370 62, 440 62, 490 74 V 230 C 440 218, 370 218, 320 238 Z" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        + ''.join(f'<path d="M{176 if s<0 else 344} {104+i*24} h{120 - (i%2)*30}" stroke="#D2E0F1" stroke-width="8" stroke-linecap="round"/>' for s in (-1, 1) for i in range(5))
+        + f'<path d="M440 60 v62 l-14 -10 l-14 10 v-62z" fill="{gid}"/>')
+    pz = ''
+    for i, (x, y, f) in enumerate([(210, 70, W), (320, 70, W), (210, 160, W), (320, 160, gid)]):
+        pz += f'<rect x="{x}" y="{y}" width="110" height="90" rx="12" fill="{f}" stroke="{L}" stroke-width="{0 if f!=W else 3}"/>'
+    pz += f'<circle cx="320" cy="115" r="16" fill="{W}" stroke="{L}" stroke-width="3"/><circle cx="265" cy="160" r="16" fill="{W}" stroke="{L}" stroke-width="3"/><circle cx="375" cy="160" r="16" fill="{W}" stroke="{L}" stroke-width="3"/><circle cx="320" cy="205" r="16" fill="#3FB8A5"/>'
+    D['puzzle'] = pz
+    D['signpost'] = (f'<rect x="312" y="60" width="16" height="190" rx="6" fill="{N}"/>'
+        f'<path d="M330 74 h150 l26 22 l-26 22 h-150z" fill="{gid}"/>'
+        f'<path d="M310 128 h-150 l-26 22 l26 22 h150z" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        f'<path d="M330 182 h110 l22 18 l-22 18 h-110z" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        f'<rect x="352" y="90" width="90" height="10" rx="5" fill="{W}" opacity=".8"/><rect x="186" y="145" width="96" height="10" rx="5" fill="#D2E0F1"/><rect x="352" y="195" width="60" height="10" rx="5" fill="#D2E0F1"/>'
+        f'<ellipse cx="320" cy="250" rx="70" ry="8" fill="#C9D6E8" opacity=".6"/>')
+    D['clipboard'] = (f'<rect x="220" y="46" width="200" height="210" rx="16" fill="{W}" stroke="{L}" stroke-width="3"/><rect x="280" y="34" width="80" height="28" rx="10" fill="{N}"/>'
+        + ''.join(f'<rect x="248" y="{88+i*38}" width="24" height="24" rx="6" fill="{"#E3F5F3" if i<3 else "#F3F5F8"}" stroke="{T if i<3 else L}" stroke-width="2"/>'
+                  + (f'<path d="M253 {100+i*38} l5 5 l10 -11" fill="none" stroke="{T}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' if i < 3 else '')
+                  + f'<rect x="284" y="{94+i*38}" width="{110-(i%2)*30}" height="11" rx="5.5" fill="#D2E0F1"/>' for i in range(4))
+        + f'<circle cx="430" cy="210" r="34" fill="{gid}"/><path d="M416 210 l10 10 l18 -20" fill="none" stroke="{W}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>')
+    D['target'] = (''.join(f'<circle cx="300" cy="150" r="{r}" fill="{f}" stroke="{L}" stroke-width="3"/>' for r, f in [(96, W), (68, "#E6EEF7"), (40, W)])
+        + f'<circle cx="300" cy="150" r="16" fill="{gid}"/>'
+        + f'<path d="M488 52 L 316 142" stroke="{N}" stroke-width="7" stroke-linecap="round"/>'
+        + f'<path d="M488 52 l-4 -24 M488 52 l24 2 M472 60 l-4 -24 M472 60 l24 2" stroke="{T}" stroke-width="5" stroke-linecap="round"/>'
+        + f'<path d="M306 147 l26 -2 l-12 -20z" fill="{N}"/>')
+    D['home-school'] = (f'<path d="M100 140 l70 -56 l70 56 v86 h-140z" fill="{W}" stroke="{L}" stroke-width="3" stroke-linejoin="round"/><rect x="152" y="176" width="36" height="50" rx="6" fill="#D2E0F1"/>'
+        f'<path d="M400 226 v-110 l60 -38 l60 38 v110z" fill="{W}" stroke="{L}" stroke-width="3" stroke-linejoin="round"/><rect x="440" y="170" width="40" height="56" rx="6" fill="{N}"/>'
+        f'<rect x="418" y="122" width="22" height="22" rx="4" fill="#D2E0F1"/><rect x="480" y="122" width="22" height="22" rx="4" fill="#D2E0F1"/>'
+        f'<path d="M250 180 C 300 130, 340 130, 390 180" fill="none" stroke="{T}" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>'
+        f'<path d="M262 64 h86 a14 14 0 0 1 14 14 v30 a14 14 0 0 1 -14 14 h-56 l-16 14 v-14 h-14 a14 14 0 0 1 -14 -14 v-30 a14 14 0 0 1 14 -14z" fill="{gid}"/>'
+        f'<rect x="270" y="80" width="60" height="9" rx="4.5" fill="{W}" opacity=".9"/><rect x="270" y="96" width="40" height="9" rx="4.5" fill="{W}" opacity=".9"/>')
+    D['signal'] = (''.join(f'<path d="M{320-r} {170} a{r} {r} 0 0 1 {2*r} 0" fill="none" stroke="{gid if i==0 else L}" stroke-width="{8 if i==0 else 5}" stroke-linecap="round" opacity="{1 - i*0.2}"/>' for i, r in enumerate([50, 90, 130]))
+        + f'<circle cx="320" cy="170" r="22" fill="{N}"/><path d="M180 232 h280" stroke="{T}" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>')
+    D['padlock'] = (f'<rect x="170" y="62" width="180" height="170" rx="14" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        + ''.join(f'<rect x="194" y="{90+i*26}" width="{130-(i%2)*36}" height="9" rx="4.5" fill="#D2E0F1"/>' for i in range(5))
+        + f'<path d="M398 120 v-26 a40 40 0 0 1 80 0 v26" fill="none" stroke="{N}" stroke-width="14" stroke-linecap="round"/>'
+        + f'<rect x="378" y="118" width="120" height="100" rx="18" fill="{gid}"/><circle cx="438" cy="160" r="12" fill="{W}"/><rect x="433" y="164" width="10" height="26" rx="5" fill="{W}"/>')
+    D['scales'] = (f'<rect x="312" y="70" width="16" height="160" rx="6" fill="{N}"/><rect x="250" y="226" width="140" height="18" rx="9" fill="{N}"/>'
+        f'<path d="M180 86 L 460 70" stroke="{N}" stroke-width="10" stroke-linecap="round"/><circle cx="320" cy="78" r="14" fill="{N}"/>'
+        f'<path d="M180 86 l-40 70 h80z" fill="none" stroke="{L}" stroke-width="3"/><path d="M460 70 l-40 70 h80z" fill="none" stroke="{L}" stroke-width="3"/>'
+        f'<path d="M136 156 a44 22 0 0 0 88 0z" fill="{W}" stroke="{L}" stroke-width="3"/><path d="M416 140 a44 22 0 0 0 88 0z" fill="{gid}"/>'
+        f'<rect x="150" y="126" width="22" height="22" rx="5" fill="#D2E0F1"/><rect x="176" y="118" width="22" height="30" rx="5" fill="#D2E0F1"/>')
+    D['heart'] = (f'<path d="M320 238 C 240 190, 196 154, 196 116 a48 48 0 0 1 124 -22 a48 48 0 0 1 124 22 c0 38 -44 74 -124 122z" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        f'<path d="M222 146 h52 l16 -30 l24 58 l18 -38 l12 20 h76" fill="none" stroke="{gid}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>')
+    D['magnifier'] = (f'<rect x="150" y="60" width="270" height="170" rx="14" fill="{W}" stroke="{L}" stroke-width="3"/>'
+        + ''.join(f'<rect x="{176+i*44}" y="{204-h}" width="28" height="{h}" rx="6" fill="#D2E0F1"/>' for i, h in enumerate([50, 80, 64, 104, 120]))
+        + f'<circle cx="430" cy="118" r="58" fill="{W}" fill-opacity=".85" stroke="{N}" stroke-width="12"/><path d="M472 160 l50 50" stroke="{N}" stroke-width="16" stroke-linecap="round"/>'
+        + f'<path d="M402 130 l20 -20 l14 12 l24 -26" fill="none" stroke="{gid}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>')
+    return D
+
+ART_FOR_CATEGORY = {'practice': ['rings', 'stones', 'book', 'heart', 'puzzle'], 'policy-compliance': ['shield', 'clipboard', 'padlock', 'calendar'],
+                    'leadership': ['bars', 'signpost', 'scales', 'target', 'magnifier'], 'inside-asend360': ['window', 'magnifier', 'target']}
+
 def art(post, w=640, h=280):
+    """Brand illustration: the post's own `art:` choice, or one picked from its topic's set."""
     seed = int(hashlib.md5(post['slug'].encode()).hexdigest(), 16)
     k = CAT_KEY[post['category']]
     bg = {'practice': ('#E3F5F3', '#C9EBE6'), 'policy-compliance': ('#E6EEF7', '#D2E0F1'),
           'leadership': ('#E9F1FB', '#D6E6F7'), 'inside-asend360': ('#E6EEF7', '#E3F5F3')}[k]
-    g = f'<defs><linearGradient id="g{seed%9999}" x1="0" x2="1"><stop offset="0" stop-color="#0381CA"/><stop offset=".5" stop-color="#08ACAC"/><stop offset="1" stop-color="#40CD70"/></linearGradient></defs>'
-    gid = f'url(#g{seed%9999})'
-    shapes = ''
-    if k == 'practice':                       # small-steps rings
-        for i in range(7):
-            x = 90 + i * 76; y = 150 + (seed >> i) % 3 * 6 - 6
-            frac = min(1, (i + 1) / 5)
-            C = 2 * math.pi * 26
-            shapes += f'<circle cx="{x}" cy="{y}" r="26" fill="#fff" stroke="#DDE2EA" stroke-width="7"/>'
-            if i < 5: shapes += f'<circle cx="{x}" cy="{y}" r="26" fill="none" stroke="{gid}" stroke-width="7" stroke-dasharray="{C*frac:.0f} {C:.0f}" transform="rotate(-90 {x} {y})"/>'
-        shapes += f'<path d="M70 222 H570" stroke="#08ACAC" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 12"/>'
-    elif k == 'policy-compliance':            # shield and document
-        shapes += '<rect x="170" y="62" width="190" height="160" rx="14" fill="#fff" stroke="#C9D6E8" stroke-width="3"/>'
-        shapes += ''.join(f'<rect x="196" y="{92+i*26}" width="{138-(i%2)*40}" height="9" rx="4.5" fill="#D2E0F1"/>' for i in range(5))
-        shapes += f'<path d="M420 70 l70 26 v52 c0 40 -30 66 -70 80 c-40 -14 -70 -40 -70 -80 v-52z" fill="{gid}"/>'
-        shapes += '<path d="M392 150 l20 20 l38 -42" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>'
-    elif k == 'leadership':                   # rising bars and compass
-        for i, hgt in enumerate([60, 90, 80, 120, 150]):
-            shapes += f'<rect x="{150+i*58}" y="{232-hgt}" width="38" height="{hgt}" rx="8" fill="{gid if i==4 else "#fff"}" stroke="#C9D6E8" stroke-width="{0 if i==4 else 3}"/>'
-        shapes += '<circle cx="500" cy="96" r="42" fill="#fff" stroke="#C9D6E8" stroke-width="3"/><path d="M500 64 l12 32 l-12 32 l-12 -32z" fill="#003574"/>'
-    else:                                     # app window
-        shapes += '<rect x="120" y="50" width="400" height="190" rx="14" fill="#fff" stroke="#C9D6E8" stroke-width="3"/><rect x="120" y="50" width="400" height="30" rx="14" fill="#003574"/><rect x="120" y="66" width="400" height="14" fill="#003574"/>'
-        shapes += ''.join(f'<circle cx="{142+i*16}" cy="65" r="4" fill="#fff" opacity=".7"/>' for i in range(3))
-        shapes += '<rect x="140" y="98" width="90" height="124" rx="8" fill="#E6EEF7"/>'
-        for i in range(4):
-            shapes += f'<rect x="250" y="{100+i*30}" width="250" height="20" rx="6" fill="#F3F5F8"/><rect x="250" y="{100+i*30}" width="{60+((seed>>i)%5)*38}" height="20" rx="6" fill="{gid}"/>'
+    gid = f'g{seed % 99999}'
+    g = f'<defs><linearGradient id="{gid}" x1="0" x2="1"><stop offset="0" stop-color="#0381CA"/><stop offset=".5" stop-color="#08ACAC"/><stop offset="1" stop-color="#40CD70"/></linearGradient></defs>'
+    D = _designs(f'url(#{gid})', seed)
+    pool = ART_FOR_CATEGORY[k]
+    name = post.get('art') if post.get('art') in D else pool[seed % len(pool)]
+    dx, dy = (w - 640) / 2, (h - 280) / 2
     return (f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="Illustration for {esc(post["category"])}" preserveAspectRatio="xMidYMid slice">{g}'
-            f'<rect width="{w}" height="{h}" fill="{bg[0]}"/><circle cx="{w-60}" cy="30" r="120" fill="{bg[1]}"/><circle cx="40" cy="{h}" r="90" fill="{bg[1]}"/>{shapes}</svg>')
+            f'<rect width="{w}" height="{h}" fill="{bg[0]}"/><circle cx="{w-60}" cy="30" r="120" fill="{bg[1]}"/><circle cx="40" cy="{h}" r="90" fill="{bg[1]}"/>'
+            f'<g transform="translate({dx:.0f} {dy:.0f})">{D[name]}</g></svg>')
 
 def picture(post, banner=False):
     """Use the post's own image if it has one, otherwise the brand illustration."""
@@ -161,7 +241,7 @@ def card(p):
             f'<div class="card-foot"><span class="read">{icon("clock")} {p["mins"]} min read</span><span class="go">{icon("arrow")}</span></div></div></a>')
 
 FILTERS = '<div class="filters" role="group" aria-label="Filter by topic"><button type="button" class="on" data-cat="all" aria-pressed="true">All</button>' + ''.join(f'<button type="button" data-cat="{CAT_KEY[c]}" aria-pressed="false">{c}</button>' for c in CATS) + '</div>'
-SUBSCRIBE = f'''<section class="wrap sub-box"><span class="sub-ico">{icon('doc')}</span><div><p class="eyebrow">Stay up to date</p><h2>Get the latest from The Practice Exchange</h2><p>New articles twice a week. Follow us to see them first.</p></div>
+SUBSCRIBE = f'''<section class="wrap sub-box" id="subscribe"><span class="sub-ico">{icon('doc')}</span><div><p class="eyebrow">Stay up to date</p><h2>Get the latest from The Practice Exchange</h2><p>New articles twice a week. Follow us to see them first.</p></div>
 <div class="sub-act"><a class="btn primary" href="{LI}" rel="noopener">Follow on LinkedIn</a><a class="btn ghost" href="{BASE}feed.xml">RSS feed</a></div></section>'''
 EXPLORE = f'''<section class="explore"><div class="wrap explore-in"><div><p class="eyebrow light">Explore ASEND360</p><h2>The right support, at the right time</h2><p>See how one platform helps you track progress, stay compliant and make confident decisions &mdash; all in one place.</p><a class="btn light" href="/">Discover ASEND360 {icon('arrow')}</a></div>
 <ul class="pillars"><li>{icon('target')}<b>Track</b><span>progress</span></li><li>{icon('doc')}<b>Stay</b><span>compliant</span></li><li>{icon('team')}<b>Support</b><span>your team</span></li><li>{icon('chart')}<b>Improve</b><span>outcomes</span></li></ul></div></section>'''
@@ -219,7 +299,7 @@ def build():
         page(p['url'], st if len(st) > 49 else st + ' | ASEND360', p.get('seo_description') or p['summary'], body, extra_head=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', og_image=((SITE + p['image']) if p.get('image', '').startswith('/') else p.get('image')))
     # feed + sitemap + 404
     items = ''.join(f'<item><title>{esc(p["title"])}</title><link>{SITE}{p["url"]}</link><guid>{SITE}{p["url"]}</guid><pubDate>{dt.datetime.combine(p["dt"], dt.time(7, 0)).strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate><category>{esc(p["category"])}</category><description>{esc(p["summary"])}</description></item>' for p in LIVE if p['dt'] <= TODAY)
-    open(f'{OUT}/feed.xml', 'w', encoding='utf-8').write(f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>The Practice Exchange — ASEND360</title><link>{SITE}{BASE}</link><description>Free SEND and inclusion guidance for UK schools</description><language>en-gb</language>{items}</channel></rss>\n')
+    open(f'{OUT}/feed.xml', 'w', encoding='utf-8').write(f'<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="{BASE}assets/feed.xsl"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>The Practice Exchange — ASEND360</title><link>{SITE}{BASE}</link><atom:link href="{SITE}{BASE}feed.xml" rel="self" type="application/rss+xml"/><description>Free SEND and inclusion guidance for UK schools</description><language>en-gb</language>{items}</channel></rss>\n')
     urls = [SITE + BASE, SITE + BASE + 'articles/'] + [SITE + p['url'] for p in LIVE if p['dt'] <= TODAY]
     open(f'{OUT}/sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{u}</loc></url>\n' for u in urls) + '</urlset>\n')
     page(BASE + '404.html', 'Page not found | ASEND360', 'Page not found.', f'<section class="hero slim"><div class="wrap"><h1>Page not found</h1><p class="hero-lede">That article may have moved. <a href="{BASE}">Browse all articles</a>.</p></div></section>', noindex=True)
